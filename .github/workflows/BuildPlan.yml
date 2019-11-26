@@ -7,11 +7,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      SHA4: ${{github.sha::4}}
 
     steps:
     - uses: actions/checkout@v1
+    - name: Export a SHA environment variable
+      run: export SHA4=$(echo $GITHUB_SHA | cut -c1-4)
+
     - name: Echo calculated sha
       run: echo ${SHA4}
       #    - name: Build the Docker image
