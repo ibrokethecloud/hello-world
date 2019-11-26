@@ -24,7 +24,8 @@ jobs:
           manifests/k8s-deployment.yaml
           manifests/k8s-service.yaml
         namespace: 'demo'
-        images: gmehta3/hello-world:${{ github.sha }}
+        images: |
+          gmehta3/hello-world:${{ github.sha }}
 
 
         
