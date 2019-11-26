@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: K8S Integration: Build and Deploy
 
 on: [push]
 
@@ -10,12 +10,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build the Docker image
-      env:
-        USERNAME: ${{ secrets.DOCKER_USER_NAME }}
-        PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build and Push the Docker image
       run: |
         docker build . --file Dockerfile --tag gmehta3/hello-world:${GITHUB_SHA:0:4}
         docker login -u ${{ secrets.DOCKER_USER_NAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker push gmehta3/hello-world:${GITHUB_SHA:0:4}
         docker logout
+    - name: Deploy to K8S
+      run: |
+        curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+        chmod +x skaffold
+        echo $${{ secrets.KUBECONFIG }} > .kubeconfig
+        export KUBECONFIG=$PWD/.kubeconfig
+        ./skaffold deploy --images gmehta3/hello-world:${GITHUB_SHA:0:4}
+        rm .kubeconfig
+
+        
