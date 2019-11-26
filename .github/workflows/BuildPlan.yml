@@ -17,15 +17,17 @@ jobs:
       with:
         kubeconfig: ${{ secrets.KUBECONFIG }}
         
-
-    - uses: Azure/k8s-deploy@v1
+    - uses: azure/setup-kubectl@v1
       with:
-        manifests: |
-          manifests/k8s-deployment.yaml
-          manifests/k8s-service.yaml
-        namespace: 'demo'
-        images: |
-          gmehta3/hello-world:${{ github.sha }}
+        version: stable
+      id: install
+    
+    - uses: actions/checkout@v1
+    - name: Download and run skaffold
+      run: |
+        curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+        chmod +x skaffold
+        ./skaffold deploy -i gmehta3/hello-world:${{ github.sha }}
 
 
         
