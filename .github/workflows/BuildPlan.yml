@@ -15,9 +15,9 @@ jobs:
         docker logout
         curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
         chmod +x skaffold
-        echo ${{ secrets.KUBECONFIG }} U+003E .kubeconfig
-        export KUBECONFIG=$PWD/.kubeconfig
-        ./skaffold deploy --images gmehta3/hello-world:${GITHUB_SHA:0:4}
-        rm .kubeconfig
+#        echo ${{ secrets.KUBECONFIG }} U+003E .kubeconfig
+#        export KUBECONFIG=$PWD/.kubeconfig
+#        ./skaffold deploy --images gmehta3/hello-world:${GITHUB_SHA:0:4}
+#        rm .kubeconfig
 
         
