@@ -8,9 +8,11 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      SHA4: ${GITHUB_SHA::4}
+      SHA4: $(echo GITHUB_SHA | cut -c1-4)
 
     steps:
     - uses: actions/checkout@v1
+    - name: Echo calculated sha
+      run: echo ${SHA4}
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag gmehta3/hello-world:$SHA4
+      run: docker build . --file Dockerfile --tag gmehta3/hello-world:${SHA4}
