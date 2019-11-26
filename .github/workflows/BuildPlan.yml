@@ -14,7 +14,7 @@ jobs:
       env:
         USERNAME: ${{ secrets.DOCKER_USER_NAME }}
         PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      run:  |
+      run: |
         docker build . --file Dockerfile --tag gmehta3/hello-world:${GITHUB_SHA:0:4}
         docker login -u ${{ secrets.DOCKER_USER_NAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker push gmehta3/hello-world:${{GITHUB_SHA:0:4}}
