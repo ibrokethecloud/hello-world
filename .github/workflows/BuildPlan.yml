@@ -18,8 +18,6 @@ jobs:
         kubeconfig: ${{ secrets.KUBECONFIG }}
         
     - uses: azure/setup-kubectl@v1
-      with:
-        version: '<version>' 
       id: install
     
     - uses: actions/checkout@v1
