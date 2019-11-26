@@ -13,13 +13,16 @@ jobs:
         docker login -u ${{ secrets.DOCKER_USER_NAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker push gmehta3/hello-world:${GITHUB_SHA:0:4}
         docker logout
-    - name: Deploy to K8S
-      run: |
-        curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-        chmod +x skaffold
-        echo ${{ secrets.KUBECONFIG }} > .kubeconfig
-        export KUBECONFIG=$PWD/.kubeconfig
-        ./skaffold deploy --images gmehta3/hello-world:${GITHUB_SHA:0:4}
-        rm .kubeconfig
+    - uses: Azure/k8s-set-context@v1
+      with:
+        kubeconfig: ${{ secrets.KUBECONFIG }}
+        
+
+    - uses: Azure/k8s-deploy@v1
+      with:
+        manifests: '/manifests/*.*'
+        namespace: 'demo'
+        images: gmehta3/hello-world:${GITHUB_SHA:0:4}
+
 
         
