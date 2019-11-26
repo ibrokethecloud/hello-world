@@ -19,4 +19,3 @@ jobs:
         docker login -u ${{ secrets.DOCKER_USER_NAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker push gmehta3/hello-world:${{GITHUB_SHA:0:4}}
         docker logout 
-      shell: bash
