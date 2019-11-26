@@ -5,15 +5,13 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SHA: ${GITHUB_SHA:0:4}
     steps:
     - uses: actions/checkout@v1
     - name: Build and Push the Docker image
       run: |
-        docker build . --file Dockerfile --tag gmehta3/hello-world:${GITHUB_SHA:0:4}
+        docker build . --file Dockerfile --tag gmehta3/hello-world:${{ github.sha }}
         docker login -u ${{ secrets.DOCKER_USER_NAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push gmehta3/hello-world:${GITHUB_SHA:0:4}
+        docker push gmehta3/hello-world:${{ github.sha }}
         docker logout
     - uses: Azure/k8s-set-context@v1
       with:
@@ -26,7 +24,7 @@ jobs:
           manifests/k8s-deployment.yaml
           manifests/k8s-service.yaml
         namespace: 'demo'
-        images: gmehta3/hello-world:${{ env.SHA }}
+        images: gmehta3/hello-world:${{ github.sha }}
 
 
         
