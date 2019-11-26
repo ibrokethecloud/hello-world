@@ -19,7 +19,7 @@ jobs:
         
     - uses: azure/setup-kubectl@v1
       with:
-        version: stable
+        version: '<version>' 
       id: install
     
     - uses: actions/checkout@v1
