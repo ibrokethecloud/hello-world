@@ -7,8 +7,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      SHA4: ${GITHUB_SHA::4}
 
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag gmehta3/hello-world:${{ github.sha | head -4  }}
+      run: docker build . --file Dockerfile --tag gmehta3/hello-world:${SHA4}
