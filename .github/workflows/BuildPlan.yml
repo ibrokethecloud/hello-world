@@ -3,11 +3,8 @@ name: K8S Integration: Build and Deploy
 on: [push]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Build and Push the Docker image
@@ -20,7 +17,7 @@ jobs:
       run: |
         curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
         chmod +x skaffold
-        echo $${{ secrets.KUBECONFIG }} > .kubeconfig
+        echo ${{ secrets.KUBECONFIG }} > .kubeconfig
         export KUBECONFIG=$PWD/.kubeconfig
         ./skaffold deploy --images gmehta3/hello-world:${GITHUB_SHA:0:4}
         rm .kubeconfig
