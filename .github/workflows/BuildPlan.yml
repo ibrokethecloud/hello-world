@@ -20,7 +20,9 @@ jobs:
 
     - uses: Azure/k8s-deploy@v1
       with:
-        manifests: './manifests/*.*'
+        manifests: |
+          manifests/k8s-deployment.yaml
+          manifests/k8s-service.yaml
         namespace: 'demo'
         images: gmehta3/hello-world:${GITHUB_SHA:0:4}
 
