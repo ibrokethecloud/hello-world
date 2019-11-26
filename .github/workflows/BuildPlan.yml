@@ -10,12 +10,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Export a SHA environment variable
-      run: |
-        export SHA4=$(echo $GITHUB_SHA | cut -c1-4)
-
-    - name: Echo calculated sha
-      run: |
-        echo $SHA4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag gmehta3/hello-world:${GITHUB_SHA:0:4}
+      #- name: Build the Docker image
+      #run: docker build . --file Dockerfile --tag gmehta3/hello-world:${GITHUB_SHA:0:4}
+    - name: Build & Push to Docker Hub
+      uses: opspresso/action-docker@master
+       env:
+         USERNAME: ${{ secrets.DOCKER_USER_NAME }}
+         PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+         # IMAGE_NAME: "user_id/image_name"
+         TAG_NAME: ${GITHUB_SHA:0:4}
