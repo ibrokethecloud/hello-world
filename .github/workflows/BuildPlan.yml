@@ -16,6 +16,6 @@ jobs:
 
     - name: Echo calculated sha
       run: |
-        echo ${SHA4}
-      #    - name: Build the Docker image
-      #run: docker build . --file Dockerfile --tag gmehta3/hello-world:${SHA4}
+        echo $SHA4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag gmehta3/hello-world:${SHA4}
