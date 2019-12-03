@@ -20,4 +20,4 @@ echo ">>> Package Helm chart >>>"
 ${TMP}/linux-amd64/helm package charts/helloworld --app-version "0.3.${BUILD_NUMBER}" --set image.tag=${BUILD_VCS_NUMBER:0:7}
 
 echo ">>> Pushing Helm chart to chart museum >>>"
-curl --data-binary "@helloworld-0.3.${BUILD_VCS_NUMBER:0:7}.tgz"  --user "${CHART_USER}:${CHART_PASSWORD}"  -vv ${CHART_URL}
+curl --data-binary "@helloworld-0.3.${BUILD_NUMBER}.tgz"  --user "${CHART_USER}:${CHART_PASSWORD}"  -vv ${CHART_URL}
