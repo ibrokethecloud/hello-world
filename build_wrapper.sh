@@ -17,7 +17,7 @@ ${TMP}/img push gmehta3/hello-world:${BUILD_VCS_NUMBER:0:7}
 ${TMP}/img logout
 
 echo ">>> Package Helm chart >>>"
-${PWD}/linux-amd64/helm package charts/helloworld --app-version "0.3.${BUILD_NUMBER}" --set image.tag=${BUILD_VCS_NUMBER:0:7}
+${PWD}/linux-amd64/helm package charts/helloworld --version "0.3.${BUILD_NUMBER}" --set image.tag=${BUILD_VCS_NUMBER:0:7}
 
 echo ">>> Pushing Helm chart to chart museum >>>"
 curl --data-binary "@helloworld-0.3.${BUILD_NUMBER}.tgz"  --user "${CHART_USER}:${CHART_PASSWORD}"  -vv ${CHART_URL}
