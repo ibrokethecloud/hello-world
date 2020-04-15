@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Build wrapper to orchestrate build"
-
+apk add --no-cache curl
 echo ">>> Download img tool >>>"
 curl -Lo ${TMP}/img  https://github.com/genuinetools/img/releases/download/v0.5.7/img-linux-amd64
 chmod +x ${TMP}/img
@@ -11,13 +11,6 @@ curl -Lo ${TMP}/helm.tar.gz https://get.helm.sh/helm-v3.0.0-rc.4-linux-amd64.tar
 tar -zxvf ${TMP}/helm.tar.gz
 
 echo ">>> Perform Container Build and Push >>>"
-${TMP}/img build -t gmehta3/hello-world:${BUILD_VCS_NUMBER:0:7} .
+${TMP}/img build -t gmehta3/hello-world:${GO_PIPELINE_COUNTER:0:7} .
 ${TMP}/img login -u ${DOCKER_LOGIN} -p ${DOCKER_PASSWORD}
-${TMP}/img push gmehta3/hello-world:${BUILD_VCS_NUMBER:0:7}
-${TMP}/img logout
-
-echo ">>> Package Helm chart >>>"
-${PWD}/linux-amd64/helm package charts/helloworld --version "0.3.${BUILD_NUMBER}" --set image.tag=${BUILD_VCS_NUMBER:0:7}
-
-echo ">>> Pushing Helm chart to chart museum >>>"
-curl --data-binary "@helloworld-0.3.${BUILD_NUMBER}.tgz"  --user "${CHART_USER}:${CHART_PASSWORD}"  -vv ${CHART_URL}
+${TMP}/img push gmehta3/hello-world:${GO_PIPELINE_COUNTER:0:7}
