@@ -1,10 +1,10 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     app: hello-world
   name: hello-world
-  namespace: demo
+  namespace: default
 spec:
   replicas: 1
   selector:
